@@ -4,6 +4,12 @@ Connect to your supported computers through Aglit, then discover and register th
 
 Start with the [connection guide](skills/aglit-connect-devices/references/connection-guide.md) for computer enrollment. Use the [device integration guide](skills/aglit-connect-devices/references/device-integration.md) for physical iPhone/Android devices, simulator keyboard setup, and registering a vendor app or localhost interface such as a printer controller. The [agent skill](skills/aglit-connect-devices/SKILL.md) routes Claude Code or Codex to the relevant procedure.
 
+## Computer and browser readiness (0.4.8)
+
+For first-time setup or a computer that appears connected but cannot be controlled, use the [setup readiness guide](skills/aglit-connect-devices/references/setup-readiness.md). It checks the original installed runtime, desktop viewing/input, the correct enabled Chrome extension, Chrome profile permissions and an actual native browser connection. Compatible repair mode preserves existing enrollment and model choices; unattended checks report blockers without approving OS permissions.
+
+This is a guidance update. New CLI/native diagnostics and repair mode require compatible published releases; installing this plugin does not ship those components or establish device readiness.
+
 ## Agentic Dev Swarm Setup (0.4.7)
 
 Use [Agentic Dev Swarm](skills/agentic-dev-swarm/SKILL.md) for development on one device or multiple authorized devices over an existing company private network or Tailscale. The agent first explains hosts, services, private URLs, what can hot reload and what requires a native rebuild, then verifies actual edit-to-screen updates on every claimed device.
@@ -19,13 +25,13 @@ For standalone Codex loading, install/copy `skills/agentic-dev-swarm` into the c
 Run inside Claude Code:
 
 ```text
-/plugin install aglit-plugin --marketplace Aglit-AI/aglit-plugin
+/plugin install aglit-plugin --marketplace Aglit-AI/plugin
 ```
 
 Or add the marketplace first, then install:
 
 ```text
-/plugin marketplace add Aglit-AI/aglit-plugin
+/plugin marketplace add Aglit-AI/plugin
 /plugin install aglit-plugin@aglit
 ```
 
@@ -51,7 +57,7 @@ The [simulator development guide](skills/aglit-connect-devices/references/simula
 
 ## Publication status
 
-Public preview package. Official directory approval is separate from GitHub distribution. Commands were checked against installed CLI 1.0.17488; no live enrollment or two-device connection was performed while authoring it.
+Public preview package. Official directory approval is separate from GitHub distribution. Readiness commands were checked against installed CLI 1.0.20487 on macOS. New permission diagnostics and repair mode require compatible published CLI/native releases. This guidance update does not establish new enrollment, Windows input or fleet-wide acceptance.
 
 Peripheral guidance describes the shared registry contract; agents must check the installed runtime schema before using it. Documentation publication is separate from native adapter availability and live-device acceptance. Camera playback and input must be verified separately from displaying an app window.
 
@@ -75,7 +81,7 @@ Example prompts:
 
 ## Sources
 
-- Aglit CLI 1.0.17488: shipped README, `aglit --help`, and `src/ssh.cjs`.
+- Aglit CLI 1.0.20487: installed status, desktop readiness and browser readiness checks; current installed help takes precedence on other versions.
 - [OpenAI plugin packaging](https://developers.openai.com/plugins/build/plugins)
 - [OpenAI submission](https://developers.openai.com/plugins/deploy/submission)
 - [Claude manifest reference](https://code.claude.com/docs/en/plugins/manifest-reference)
