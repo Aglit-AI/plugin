@@ -11,7 +11,7 @@ Distinguish the **controller**, the **original control host**, the **employee**,
 
 - For first-time installation, missing permissions or repair of an enrolled computer, start with [setup readiness](references/setup-readiness.md). Verify desktop control and a connected browser before claiming setup is complete.
 
-- For computer enrollment, Console access, or conditional private SSH between Macs, read [the connection guide](references/connection-guide.md). Its CLI examples were checked against `@aglit-ai/cli` 1.0.17488; inspect the installed help before using another version.
+- For computer enrollment, Console access, or conditional private SSH between Macs, read [the connection guide](references/connection-guide.md). Check installed help and runtime compatibility; source guidance does not establish availability in an older CLI/native release.
 - For physical phones, existing or new simulators, or registering a printer/drone/other device, read [the device integration guide](references/device-integration.md). It includes discovery, input setup, the shared interface, registration examples, and viewer URLs.
 - For simulator resource admission, protected XCTest recovery, genuine Dev/Staging distribution and compatible Metro updates, read [simulator development](references/simulator-development.md). Apply its shared-host manual admission policy before starting a device; it does not claim runtime hard caps.
 - For an existing registration, reuse its exact employee/device identity instead of enrolling a duplicate.
