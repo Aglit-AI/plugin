@@ -1,13 +1,13 @@
 {
   "name": "aglit-plugin",
-  "version": "0.4.7",
+  "version": "0.4.8",
   "license": "MIT",
   "icon": "./assets/aglit.png",
   "author": {
     "name": "Aglit"
   },
-  "homepage": "https://github.com/Aglit-AI/aglit-plugin",
-  "repository": "https://github.com/Aglit-AI/aglit-plugin",
+  "homepage": "https://github.com/Aglit-AI/plugin",
+  "repository": "https://github.com/Aglit-AI/plugin",
   "keywords": [
     "aglit",
     "remote-access",

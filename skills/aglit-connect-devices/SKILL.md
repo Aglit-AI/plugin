@@ -1,6 +1,6 @@
 ---
 name: aglit-connect-devices
-description: Connect to computers and their registered devices through Aglit. Use for Mac or Windows enrollment, physical iPhone or Android connections, simulator discovery and keyboard setup, registering a vendor app or localhost device UI, and connection troubleshooting. Device adapters require a compatible authenticated runtime.
+description: Set up, connect and repair Aglit computer and browser control. Use for Mac or Windows enrollment, CLI readiness, missing desktop or browser permissions, phones or simulators, and vendor-app or localhost device interfaces. Requires a compatible authenticated runtime.
 ---
 
 # Connect to your devices with Aglit
@@ -8,6 +8,8 @@ description: Connect to computers and their registered devices through Aglit. Us
 Distinguish the **controller**, the **original control host**, the **employee**, and the **registered device**. Enrolling the controller does not enroll another computer. A phone or simulator is attached to an existing control host; an arbitrary peripheral can expose its controls through a vendor app or localhost UI.
 
 ## Choose the workflow
+
+- For first-time installation, missing permissions or repair of an enrolled computer, start with [setup readiness](references/setup-readiness.md). Verify desktop control and a connected browser before claiming setup is complete.
 
 - For computer enrollment, Console access, or conditional private SSH between Macs, read [the connection guide](references/connection-guide.md). Its CLI examples were checked against `@aglit-ai/cli` 1.0.17488; inspect the installed help before using another version.
 - For physical phones, existing or new simulators, or registering a printer/drone/other device, read [the device integration guide](references/device-integration.md). It includes discovery, input setup, the shared interface, registration examples, and viewer URLs.

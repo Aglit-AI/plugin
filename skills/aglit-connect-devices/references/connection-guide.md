@@ -43,9 +43,9 @@ On a desktop, `tailscale serve status` can confirm the app created the listener.
 
 ## What connects to what
 
-Install Aglit Computer Use on each supported computer you want to reach. Setup registers that computer to your signed-in Aglit account and enables Anywhere Access. Connect through Aglit Console using that account. Repeat enrollment on each additional target; use distinct names such as “Office Mac” and “Home PC”.
+Install Aglit Computer Use on each supported computer you want to reach. Setup can register that computer to your signed-in Aglit account and asks whether to enable Anywhere Access. Connect through Aglit Console using that account. Repeat enrollment on each additional target; use distinct names such as “Office Mac” and “Home PC”.
 
-This guide reflects the installed CLI 1.0.17488 README, help, and SSH implementation, inspected November 6, 2026. Desktop availability is independent of CLI publication. The documented installer supports Apple silicon Macs and Windows x64; a qualified runtime release is required. Other target platforms are not established by these sources.
+Check the current installed CLI help and [setup readiness](setup-readiness.md) before making changes. CLI and native runtime publication are independent; newer permission diagnostics or repair mode require compatible installed versions. Desktop availability is independent of CLI publication. The documented installer supports Apple silicon Macs and Windows x64; a qualified runtime release is required. Other target platforms are not established by these sources.
 
 ## Enroll a computer
 
@@ -56,7 +56,7 @@ pnpm add -g @aglit-ai/cli
 aglit init
 ```
 
-The guided flow asks for a computer name and provider, opens Aglit's Google sign-in, requests required OS permissions, and enables Anywhere Access. It detects existing Codex/Claude logins and asks when multiple usable providers exist. A detected login is not proof that model inference works.
+The guided flow handles the computer name, account/server, team and model choices, then required OS/browser setup. Enable Anywhere Access when the user requests it. Reuse the existing registration and choices on a configured computer; prefer compatible repair mode for missing prerequisites. A detected model login or deferred selection does not prove inference.
 
 To supply the name and provider explicitly:
 
@@ -84,7 +84,8 @@ On a configured local installation, these commands open Console or inspect acces
 
 ```sh
 aglit console
-aglit pipelines devices
+aglit employees list
+aglit devices list
 ```
 
 A device appearing in this list does not prove its pipeline or desktop session is connected. If there are multiple similarly named computers, resolve the intended target before acting.
@@ -108,33 +109,17 @@ After enrolling the control host, use the [device integration guide](device-inte
 
 ## Private SSH between Macs — conditional
 
-The installed README labels this a source implementation requiring a compatible native release and a real two-device acceptance run. The CLI implementation restricts outgoing connections to macOS and documents Windows SSH as unavailable. Treat this as conditional until the actual runtime and a connection succeed.
-
-On each Mac, after enrollment:
+Use this route only when installed CLI help and the original runtime support it. SSH follows the existing approved Anywhere Access setting; it is not a separate enable/disable switch.
 
 ```sh
 aglit ssh status --json
-aglit ssh on
-```
-
-Only enable SSH when requested. On the target, obtain its device ID and SHA-256 identity fingerprint from local status or another trusted channel. On the controller:
-
-```sh
 aglit ssh list
-aglit ssh DEVICE_ID --fingerprint VERIFIED_SHA256
+aglit ssh DEVICE_ID --command "hostname"
 ```
 
-Replace both placeholders with verified target values. The CLI expects the fingerprint as 64 lowercase hexadecimal characters. Discovery is for selection; independently verify the identity before connecting.
+Use the exact registered device ID from the owning account's enrolled roster, not an employee ID or hostname. The current CLI resolves enrolled trust automatically. Missing enrollment or a key mismatch fails closed; do not bypass strict host verification or copy credentials. Older releases that require a different contract must be updated or used according to their actual help.
 
-For an authorized, harmless identity check:
-
-```sh
-aglit ssh DEVICE_ID --fingerprint VERIFIED_SHA256 --command "hostname"
-```
-
-If the target requires an Anywhere Access security code, connect interactively and enter the code displayed on that target. Codes are not printed in its terminal. The prompt requires a logged-in graphical desktop session. Do not turn off two-factor access to work around a prompt.
-
-This path uses Aglit's authenticated private transport; it does not require router port forwarding or enabling macOS System Remote Login. Preserve strict host verification. Disable SSH on a computer with `aglit ssh off` when the user requests it.
+Complete an existing security-code challenge through the supported protected flow. A locked, offline or stopped target is not established by discovery. This transport does not require router port forwarding or enabling system Remote Login.
 
 ## Troubleshooting
 
@@ -147,15 +132,15 @@ This path uses Aglit's authenticated private transport; it does not require rout
 | Enabled but no connected tunnel | Inspect target runtime, network, and account status; do not call it a working session. |
 | Runtime stopped | Open it with `aglit ui`, then recheck status. |
 | Command missing from the runtime | Inspect `aglit update --check`; update when appropriate, then retry. CLI and native runtime releases are distinct. |
-| Browser extension missing | Run `aglit browser status --json`, then `aglit browser setup` if browser control is needed. Enrollment can succeed without extension setup. |
-| Browser setup succeeds but control does not | Extension installation is separate from browser-control connectivity; verify an actual session. |
+| Browser extension missing | Run `aglit browser status --json`, then `aglit browser setup` if browser control is needed. Check Computer Use readiness as well, and require an actual connected browser before claiming browser control works. |
+| Browser setup succeeds but control does not | Follow [setup readiness](setup-readiness.md): inspect desktop control, extension enabled state, Chrome-data access and the native connection; verify actual actions. |
 | SSH unavailable or unknown command | Check compatible macOS runtime support; use Console desktop access where available. |
 | SSH fingerprint mismatch | Stop and verify the target's identity locally or through a trusted channel. |
 | Login opens an existing ordinary Aglit Desktop | The README documents a shared-port coexistence limitation. Report it; do not invent a callback-port workaround or terminate unrelated sessions. |
 
 ## Ownership and access boundaries
 
-Setup creates a Personal computer. Team invitations and membership do not automatically share it. `aglit teams init` and team invitations are separate workflows and do not prove an authoritative team-device access binding.
+Setup creates a Personal computer. Team invitations and membership do not automatically share it. `aglit team` and team invitations are separate workflows and do not prove an authoritative team-device access binding.
 
 Installing this skill in ChatGPT or Claude does not install a runtime on another computer, create an authenticated MCP connection, or grant access to the user's devices. Use only tools actually configured for the selected target; do not assume an existing Aglit MCP integration points at that target.
 
